@@ -48,6 +48,7 @@
                             <field name="precio"/>
                             <field name="moneda"/>
                             <field name="tienda"/>
+                            <field name="es_magnetico"/>
                         </group>
                     </group>
 
@@ -62,7 +63,6 @@
                                     <field name="decoder_h2" invisible="categoria not in ['Locomotora', 'Emu']"/>
                                     <field name="cv_address"/>
                                     <field name="config"/>
-                                    <field name="es_magnetico"/>
                                 </group>
                                 <group string="Mantenimiento">
                             <field name="fecha_ultimo_mantenimiento"/>
@@ -97,6 +97,22 @@
 
             <templates>
                 <t t-name="kanban-box">
+                    <!-- 🚀 PARCHE CSS PARA ODOO 17: Forzar el verde botella y anular máscaras -->
+                <style>
+                    .o_kanban_record, .oe_kanban_global_click, .oe_kanban_card {
+                        background-color: #1b4d3e !important;
+                        color: #e2c275 !important;
+                        transition: none !important;
+                    }
+                    .o_kanban_record:hover, .oe_kanban_global_click:hover, .oe_kanban_card:hover {
+                        background-color: #1b4d3e !important;
+                        opacity: 1 !important;
+                        filter: none !important;
+                    }
+                    .o_kanban_record::before, .o_kanban_record::after {
+                        display: none !important;
+                    }
+                </style>
                     <div t-attf-class="oe_kanban_global_click p-0 overflow-hidden shadow-sm" style="border-radius: 8px; margin: 0;">
                         
                         <div style="height: 150px; width: 100%; background: #f1f1f1; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
