@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VSCode y editores
+.vscode/
+.idea/
+*.swp
+
+# Sistemas operativos
+Thumbs.db
+.DS_Store

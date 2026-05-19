@@ -1,0 +1,272 @@
+/* 1. FONDO DEL MENÚ PRINCIPAL (Efecto Noche Moonlight) */
+.o_home_menu {
+  /* Un degradado radial que simula la luz de la luna en el centro */
+  background: radial-gradient(
+    circle at 50% 40%,
+    #1b4d3e 0%,
+    #0a192f 70%,
+    #050c16 100%
+  ) !important;
+  background-attachment: fixed !important;
+}
+
+/* 2. ICONOS DE LAS APPS */
+.o_home_menu .o_app_icon {
+  border: 1px solid rgba(226, 194, 117, 0.3) !important; /* Borde dorado sutil */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5) !important;
+  transition: transform 0.3s ease;
+}
+
+.o_home_menu .o_app_icon:hover {
+  transform: translateY(-5px); /* Efecto flotante al pasar el ratón */
+  border-color: #e2c275 !important; /* Brilla en dorado al tocarlo */
+}
+
+/* 3. TEXTOS DE LAS APPS (Dorado del cartel) */
+.o_home_menu .o_caption {
+  color: #e2c275 !important;
+  font-weight: 500 !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* 4. BARRA SUPERIOR (Navbar) */
+.o_main_navbar {
+  background-color: #1b4d3e !important; /* Verde esmeralda oscuro */
+  border-bottom: 2px solid #e2c275 !important; /* Línea dorada divisoria */
+}
+
+/* 5. BOTONES DE ACCIÓN (Dorado Moonlight) */
+.btn-primary {
+  background-color: #e2c275 !important;
+  border-color: #c1a35b !important;
+  color: #0a192f !important; /* Texto oscuro para contraste */
+  font-weight: bold;
+}
+
+/* 6. FONDO DE LAS FICHAS */
+.o_form_view .o_form_sheet_bg {
+  /* Degradado de fondo de la página */
+  background: radial-gradient(
+    circle at top,
+    #102a24 0%,
+    #071311 100%
+  ) !important;
+}
+
+.o_form_view .o_form_sheet {
+  /* Fondo de la "hoja" donde están los datos */
+  background-color: #1b4d3e !important; /* El verde de la barra */
+  border: 1px solid #e2c275 !important; /* Borde dorado fino */
+  color: #e2c275 !important; /* Texto en dorado suave */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 7. BOTÓN "NEW" Y BOTONES PRIMARIOS (Dorado Moonlight) */
+.o_control_panel_main_buttons .btn-primary,
+.btn-primary,
+.o_form_button_save {
+  background-color: #e2c275 !important;
+  border-color: #c1a35b !important;
+  color: #071311 !important;
+  font-weight: bold !important;
+}
+
+/* --- BARRA SUPERIOR DE CONTROL (Breadcrumbs y Acciones) --- */
+.o_control_panel {
+  background-color: #1b4d3e !important; /* El verde de tu barra superior */
+  border-bottom: 2px solid #e2c275 !important; /* Línea divisoria dorada */
+}
+
+/* --- LETRAS DORADAS EN LAS MIGAS DE PAN --- */
+.breadcrumb-item,
+.breadcrumb-item a,
+.o_breadcrumb span,
+.o_control_panel_breadcrumbs .active {
+  color: #e2c275 !important; /* Dorado Moonlight */
+  font-weight: 500 !important;
+}
+
+/* --- BOTÓN "ACTION" Y NAVEGACIÓN (Flechas y números) --- */
+.o_cp_action_menus .btn,
+.o_pager_counter,
+.o_pager_navigation i {
+  color: #e2c275 !important; /* Iconos y números en dorado */
+  background-color: transparent !important;
+  border: none !important;
+}
+
+/* --- SEPARADORES Y RECUADROS --- */
+.o_control_panel_main,
+.o_control_panel_breadcrumbs {
+  background-color: transparent !important;
+}
+
+/* Quitar el borde gris de los botones de flecha */
+.btn-secondary {
+  border-color: rgba(226, 194, 117, 0.3) !important;
+  color: #e2c275 !important;
+}
+
+.btn-primary:hover,
+.o_form_button_save:hover {
+  background-color: #c1a35b !important;
+  box-shadow: 0 0 10px #e2c275 !important;
+}
+
+/* ETIQUETAS Y TEXTOS DEL FORMULARIO */
+.o_form_view .o_cell .o_form_label {
+  color: #e2c275 !important; /* Etiquetas en dorado */
+  opacity: 0.8;
+}
+
+/* INPUTS (Cajas donde escribes) */
+.o_form_view input,
+.o_form_view select,
+.o_form_view textarea {
+  background-color: #0d261f !important;
+  color: #ffffff !important;
+  border: 1px solid #e2c275 !important;
+}
+
+/* TÍTULOS (H1, H2) */
+.o_form_view h1,
+.o_form_view h2,
+.o_form_view .oe_title {
+  color: #e2c275 !important;
+}
+
+/* LA BARRA DE PESTAÑAS (Notebook) --- */
+/* Forzamos el fondo de la tira completa */
+.o_form_view .o_notebook .nav-tabs {
+  background-color: #0d261f !important;
+  border-bottom: 2px solid #e2c275 !important;
+  display: flex !important;
+}
+
+/* Forzamos el fondo de cada ítem de la lista */
+.o_form_view .o_notebook .nav-item {
+  background-color: #0d261f !important;
+}
+
+/* Estilo de los enlaces (texto) */
+.o_form_view .o_notebook .nav-link {
+  color: #e2c275 !important;
+  background-color: #0d261f !important;
+  border: none !important;
+  opacity: 0.7;
+}
+
+/* La pestaña ACTIVA */
+.o_form_view .o_notebook .nav-link.active {
+  background-color: #e2c275 !important; /* Fondo dorado */
+  color: #071311 !important; /* Texto oscuro */
+  opacity: 1 !important;
+  border-radius: 4px 4px 0 0 !important;
+}
+
+/* --- LIMPIEZA DE BORDES BLANCOS --- */
+.o_notebook,
+.tab-content {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+/* --- EL BOTÓN NEW (btn-outline-primary) --- */
+.o_form_button_create,
+.btn-outline-primary.o_form_button_create {
+  background-color: #e2c275 !important; /* Fondo Dorado */
+  border-color: #c1a35b !important; /* Borde Bronce */
+  color: #071311 !important; /* Texto Negro Noche */
+  font-weight: bold !important;
+  opacity: 1 !important;
+}
+
+/* --- Reflejo dorado al hacer hover sobre la tarjeta --- */
+.o_form_button_create:hover {
+  background-color: #c1a35b !important;
+  box-shadow: 0 0 8px #e2c275 !important;
+}
+
+/* --- ELIMINAR EL FONDO BLANCO DEL TÍTULO (Breadcrumbs) --- */
+.o_control_panel_breadcrumbs,
+.breadcrumb,
+.breadcrumb-item {
+  background-color: transparent !important; /* Forzamos transparencia */
+  background: none !important;
+}
+
+/* --- TEXTO DORADO (Sin sombras extrañas) --- */
+.breadcrumb-item,
+.breadcrumb-item a,
+.o_breadcrumb span,
+.o_control_panel_breadcrumbs .active {
+  color: #e2c275 !important;
+  text-shadow: none !important;
+}
+
+/* --- ARREGLO DE LOS BOTONES DE NAVEGACIÓN (Las flechitas) --- */
+.o_pager_navigation .btn {
+  background-color: rgba(226, 194, 117, 0.1) !important;
+  color: #e2c275 !important;
+  border: 1px solid rgba(226, 194, 117, 0.3) !important;
+}
+
+.o_pager_navigation .btn:hover {
+  background-color: #e2c275 !important;
+  color: #071311 !important;
+}
+
+/* INVENTARIO */
+/* --- FONDO GENERAL DEL KANBAN (Noche Profunda) --- */
+.o_kanban_view {
+  background: radial-gradient(
+    circle at 50% 30%,
+    #102a24 0%,
+    #071311 100%
+  ) !important;
+  background-attachment: fixed !important;
+}
+
+/* --- LAS TARJETAS (Cards) --- */
+.o_kanban_view .o_kanban_record {
+  background-color: #1b4d3e !important; /* Verde Esmeralda oscuro */
+  border: 1px solid rgba(226, 194, 117, 0.3) !important; /* Borde dorado tenue */
+  border-radius: 8px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.3s ease;
+}
+
+.o_kanban_view .o_kanban_record:hover {
+  border-color: #e2c275 !important; /* Brilla al pasar el ratón */
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(226, 194, 117, 0.2) !important;
+}
+
+/* --- TEXTOS DENTRO DE LA TARJETA --- */
+/* Nombre del tren */
+.o_kanban_view .o_kanban_record strong,
+.o_kanban_view .o_kanban_record .o_kanban_record_title {
+  color: #e2c275 !important; /* Dorado Moonlight */
+}
+
+/* Referencia y otros textos secundarios */
+.o_kanban_view .o_kanban_record span,
+.o_kanban_view .o_kanban_record div {
+  color: rgba(226, 194, 117, 0.7) !important; /* Dorado suave */
+}
+
+/* --- BARRA DE FILTROS Y BÚSQUEDA (La franja de arriba) --- */
+.o_cp_top_right .o_searchview,
+.o_cp_top_left .btn {
+  background-color: #0d261f !important;
+  border: 1px solid rgba(226, 194, 117, 0.5) !important;
+  color: #e2c275 !important;
+}
+
+/* --- ICONOS DE VISTA (Esquina superior derecha) --- */
+.o_cp_switch_buttons .btn.active {
+  background-color: #e2c275 !important;
+  color: #071311 !important;
+}

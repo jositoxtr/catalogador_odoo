@@ -1,0 +1,22 @@
+project_name: "Odoo Asset Manager"
+framework: "Odoo 16.0"
+language: "Python 3.10"
+architecture:
+  pattern: "MVC (Model-View-Controller)"
+  models_path: "models/"
+  views_path: "views/"
+  security_path: "security/"
+  data_path: "data/"
+
+standards:
+  coding_style: "Odoo Coding Guidelines (PEP8)"
+  naming_convention: "snake_case for fields, CamelCase for classes"
+  indentation: "4 spaces"
+
+data_source:
+  type: "PostgreSQL"
+  import_format: "CSV"
+
+deployment:
+  tool: "odoo-bin"
+  config_file: "odoo.conf"

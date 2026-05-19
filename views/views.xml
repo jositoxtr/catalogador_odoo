@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- VISTA DE LISTA (Tree) -->
+    <record id="tren_catalog_view_tree" model="ir.ui.view">
+        <field name="name">tren.catalog.view.tree</field>
+        <field name="model">tren.catalog</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="semaforo == 'stop'" decoration-warning="semaforo == 'red'">
+                <field name="name"/>
+                <field name="referencia"/>
+                <field name="marca"/>
+                <field name="categoria"/>
+                <field name="mantenimiento_intervalo_dias" readonly="1"/>
+                <field name="semaforo" widget="badge" 
+                       decoration-success="semaforo == 'green'" 
+                       decoration-warning="semaforo == 'amber'" 
+                       decoration-danger="semaforo == 'red'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- VISTA DE FORMULARIO (Con lógica condicional) -->
+    <record id="tren_catalog_view_form" model="ir.ui.view">
+        <field name="name">tren.catalog.view.form</field>
+        <field name="model">tren.catalog</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="Ej. Renfe 444..."/></h1>
+                    </div>
+                    <group>
+                        <group string="Información General">
+                            <field name="compania"/>
+                            <field name="pais"/>
+                            <field name="categoria"/>
+                            <field name="propulsion" attrs="{'invisible': [('categoria', 'not in', ['Locomotora', 'Emu'])]}"/>
+                            <field name="marca"/>
+                            <field name="referencia"/>
+                            <field name="intro"/>
+                            <field name="comentarios"/>
+                        </group>
+                        <group string="">
+                            <field name="librea"/>
+                            <field name="epoca"/>
+                            <field name="cantidad"/>
+                            <field name="precio"/>
+                            <field name="moneda"/>
+                            <field name="tienda"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <!-- PESTAÑA TÉCNICA: Solo visible para Locomotoras y EMUs -->
+                        <page string="Detalles Técnicos" 
+                              attrs="{'invisible': [('categoria', 'not in', ['Locomotora', 'Emu'])]}">
+                            <group>
+                                <group string="Digital">
+                                    <field name="decoder_main"/>
+                                    <field name="decoder_h1" attrs="{'invisible': [('categoria', 'not in', ['Emu'])]}"/>
+                                    <field name="decoder_h2" attrs="{'invisible': [('categoria', 'not in', ['Emu'])]}"/>
+                                    <field name="cv_address"/>
+                                    <field name="config"/>
+                                    <field name="es_magnetico"/>
+                                </group>
+                                <group string="Mantenimiento">
+                            <field name="fecha_ultimo_mantenimiento"/>
+                            <field name="siguiente_mto"/>
+                            <field name="mantenimiento_intervalo_dias" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- VISTA KANBAN -->
+    <record id="tren_catalog_view_kanban" model="ir.ui.view">
+    <field name="name">tren.catalog.view.kanban</field>
+    <field name="model">tren.catalog</field>
+    <field name="arch" type="xml">
+        <kanban class="o_kanban_mobile" sample="1">
+            <!-- Campos necesarios para la lógica de la tarjeta -->
+            <field name="id"/>
+            <field name="name"/>
+            <field name="imagen_url"/>
+            <field name="semaforo"/>
+            <field name="mantenimiento_intervalo_dias"/>
+            <field name="pais"/>
+            <field name="marca"/>
+            <field name="referencia"/>
+            <field name="es_magnetico"/> 
+            <field name="decoder_brand_logo"/>
+
+            <templates>
+                <t t-name="kanban-box">
+                    <div t-attf-class="oe_kanban_global_click p-0 overflow-hidden shadow-sm" style="border-radius: 8px; margin: 0;">
+                        
+                        <div style="height: 150px; width: 100%; background: #f1f1f1; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                            
+                            <t t-if="record.imagen_url.raw_value">
+                                <!-- Si hay URL, ponemos la imagen con una clase de Odoo que maneja mejor los errores -->
+                                <img t-att-src="record.imagen_url.value" 
+                                    t-att-alt="record.referencia.value"
+                                    alt="Imagen de la unidad"
+                                    class="o_kanban_image_inner_pic"
+                                    style="width: 100%; height: 100%; object-fit: cover;"/>
+                            </t>
+
+                            <t t-else="">
+                                <!-- Si no hay URL, mostramos el icono directamente -->
+                                <div class="text-center" style="color: #ccc;">
+                                    <i class="fa fa-picture-o fa-3x" role="img" aria-label="Sin foto"/>
+                                    <p style="font-size: 10px; margin-top: 5px;">SIN FOTO</p>
+                                </div>
+                            </t>
+                            
+                            <!-- BANDERA (Esquina Superior Derecha) -->
+                            <t t-if="record.pais.raw_value">
+                                <img t-attf-src="https://fotosparaapp.s3.eu-north-1.amazonaws.com/jositoxtr/flags/#{record.pais.raw_value.toLowerCase().trim()}.png" 
+                                    alt="Bandera"
+                                    class="position-absolute top-0 end-0 m-2 shadow-sm" 
+                                    style="width: 24px; border-radius: 2px; z-index: 10;"
+                                    title="País"/>
+                            </t>
+                            
+                            <!-- ICONO MAGNÉTICO (Esquina Inferior Derecha) -->
+                            <t t-if="record.es_magnetico.raw_value">
+                                <div class="position-absolute bottom-0 end-0 m-2 d-flex align-items-center justify-content-center" 
+                                    style="width: 24px; height: 24px; background: rgba(255,255,255,0.8); border-radius: 50%; box-shadow: 1px 1px 3px rgba(0,0,0,0.2); z-index: 10;"
+                                    title="Enganche Magnético">
+                                    <i class="fa fa-magnet" style="color: #d9534f; font-size: 14px;"/>
+                                </div>
+                            </t>
+
+                            <!-- LOGO DECODER (Usando el campo calculado en Python para evitar errores) -->
+                            <t t-if="record.decoder_brand_logo.raw_value">
+                                <img t-attf-src="https://fotosparaapp.s3.eu-north-1.amazonaws.com/jositoxtr/decoder/#{record.decoder_brand_logo.raw_value.toLowerCase().trim()}.png" 
+                                    alt="Decoder"
+                                    class="position-absolute bottom-0 start-0 m-2" 
+                                    style="height: 18px; max-width: 45px; object-fit: contain; z-index: 10; filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5));"
+                                    onerror="this.style.display='none'"/>
+                            </t>
+
+                            <!-- OPCIONAL: Badge de la categoría sobre la foto -->
+                            <span class="position-absolute top-0 start-0 badge bg-dark-75 text-white m-1" style="font-size: 9px; opacity: 0.7;">
+                                <field name="categoria"/>
+                            </span>
+                        </div>
+
+
+                        <!-- CUERPO DE LA TARJETA -->
+                        <div class="p-2" style="background-color: #1b4d3e !important; color: #e2c275 !important; border-radius: 0 0 8px 8px;">
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <div style="flex-grow: 1;">
+                                    <strong class="o_kanban_record_title" style="font-size: 1.1em; color: #e2c275 !important;">
+                                        <field name="name"/>
+                                    </strong>
+                                    <div class="text-muted small mt-1">
+                                        <span>Ref:    <field name="referencia"/> |</span>
+                                        <t t-if="record.categoria.raw_value == 'Locomotora' or record.categoria.raw_value == 'Emu'">
+                                            <span>|  Decoder: </span>
+                                                <t t-if="record.decoder_brand_logo.raw_value and record.decoder_brand_logo.raw_value != 'desconocido'">
+                                                    <img t-attf-src="https://fotosparaapp.s3.eu-north-1.amazonaws.com/jositoxtr/decoder/#{record.decoder_brand_logo.raw_value.toLowerCase().trim()}.png" 
+                                                        alt="Logo"
+                                                        style="height: 14px; max-width: 40px; object-fit: contain;"
+                                                        t-att-title="record.decoder_brand_logo.value"/>
+                                            </t>
+                                        </t>
+                                    </div>
+                                </div>
+
+                                <!-- LOGO DEL FABRICANTE (Aquí abajo a la derecha) -->
+                                <div class="ml-2 d-flex align-items-center justify-content-center" 
+                                    style="background-color: #0d261f; 
+                                            border: 1px solid #e2c275; 
+                                            border-radius: 4px; 
+                                            padding: 4px; 
+                                            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+                                            min-width: 65px;">
+                                    <t t-if="record.marca.raw_value">
+                                        <img t-attf-src="https://fotosparaapp.s3.eu-north-1.amazonaws.com/jositoxtr/fabricantes/#{record.marca.raw_value.toLowerCase().trim()}.png" 
+                                            alt="Marca"
+                                            style="height: 22px; max-width: 55px; object-fit: contain; filter: brightness(1.1);"
+                                            t-att-title="record.marca.value"/>
+                                    </t>
+                                </div>
+
+                                <!-- Semáforo tipo Badge (Igual que en React) -->
+                                <span t-attf-class="badge rounded-pill bg-#{record.semaforo.raw_value === 'green' ? 'success' : (record.semaforo.raw_value === 'amber' ? 'warning' : 'danger')} p-1 px-2" style="font-size: 10px;">
+                                    <t t-esc="record.mantenimiento_intervalo_dias.value"/> d
+                                </span>
+                            </div>
+                            <!--
+                            <div class="text-muted d-flex justify-content-between" style="font-size: 11px;">
+                                <span>Categoría: <field name="categoria"/></span>
+                                <span class="fw-bold"><field name="marca"/></span>
+                            </div>-->
+                        </div>
+                    </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ESTADÍSTICAS -->
+    <record id="view_tren_catalog_search_stats" model="ir.ui.view">
+        <field name="name">tren.catalog.search.stats</field>
+        <field name="model">tren.catalog</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="marca"/>
+                <field name="cv_address" invisible="1"/>
+
+                <group expand="0" string="Estadísticas Formuladas">
+                    <!-- Filtros simples (Odoo no permite listas en group_by aquí) -->
+                    <filter string="🌍 Unidades por País" name="group_country" context="{'group_by':'pais'}"/>
+                    <filter string="🏪 Unidades por Tienda" name="group_store" context="{'group_by':'tienda'}"/>
+                    <filter string="🏗️ Por Marca" name="group_brand" context="{'group_by':'marca'}"/>
+                    <filter string="⏳ Por Época" name="group_epoca" context="{'group_by':'epoca'}"/>
+                    <filter string="🔌 Por Propulsión" name="group_prop" context="{'group_by':'propulsion'}"/>
+                    <filter string="🧲 Por Magnético" name="group_mag" context="{'group_by':'es_magnetico'}"/>
+                    <filter string="🚦 Estado Mantenimiento" name="group_mto" context="{'group_by':'semaforo'}"/>
+                </group>
+
+                <separator/>
+
+                <!-- Sselectores para el Selector Doble Manual -->
+                <group expand="0" string="Selector Manual (Comparativas)">
+                    <filter string="Categoría" name="man_cat" context="{'group_by':'categoria'}"/>
+                    <filter string="Compañía" name="man_comp" context="{'group_by':'compania'}"/>
+                    <filter string="Tienda" name="man_store" context="{'group_by':'tienda'}"/>
+                    <filter string="Marca" name="man_brand" context="{'group_by':'marca'}"/>
+                    <filter string="País" name="man_country" context="{'group_by':'pais'}"/>
+                    <filter string="Época" name="man_epoca" context="{'group_by':'epoca'}"/>
+                    <filter string="Propulsión" name="man_prop" context="{'group_by':'propulsion'}"/>
+                    <filter string="Magnético" name="man_mag" context="{'group_by':'es_magnetico'}"/>
+                    <filter string="Librea" name="man_librea" context="{'group_by':'librea'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <!-- GRÁFICOS DONUTS/BARRAS -->
+    <record id="view_tren_catalog_graph" model="ir.ui.view">
+        <field name="name">tren.catalog.graph</field>
+        <field name="model">tren.catalog</field>
+        <field name="arch" type="xml">
+            <graph string="Análisis de Flota" sample="1">
+                <field name="marca"/> <!-- Eje X por defecto -->
+                <field name="cantidad" type="measure"/>
+                <field name="inversion_total" type="measure"/> <!-- Eje Y: Inversión -->
+                <field name="cv_address" invisible="1"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- SELECTOR DOBLE Y TOTALES -->
+    <record id="view_tren_catalog_pivot" model="ir.ui.view">
+        <field name="name">tren.catalog.pivot</field>
+        <field name="model">tren.catalog</field>
+        <field name="arch" type="xml">
+            <pivot string="Tabla de Datos" display_quantity="1">
+                <field name="marca" type="row"/>
+                <field name="categoria" type="col"/>
+                <field name="cantidad" type="measure"/>
+                <field name="inversion_total" type="measure"/>
+                <field name="cv_address" invisible="1"/>
+            </pivot>
+        </field>
+    </record>
+
+
+    <!-- ACCIÓN Y MENÚS -->
+
+    <!-- PRINCIPAL -->
+    <record id="tren_catalog_action" model="ir.actions.act_window">
+        <field name="name">Mi Colección de Trenes</field>
+        <field name="res_model">tren.catalog</field>
+        <!-- Ponemos kanban al principio de la lista -->
+        <field name="view_mode">kanban,tree,form</field> 
+    </record>
+
+    <!-- ESTADÍSTICAS -->
+    <record id="tren_catalog_action_stats" model="ir.actions.act_window">
+        <field name="name">Análisis de Colección</field>
+        <field name="res_model">tren.catalog</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="search_view_id" ref="view_tren_catalog_search_stats"/>
+        <field name="context">{
+            'graph_measure': 'inversion_total', 
+            'graph_mode': 'bar'
+        }</field>
+    </record>
+
+    <menuitem id="tren_menu_root" name="Trenes" web_icon="catalogador,static/description/icon.png"/>
+    <menuitem id="tren_menu_main" name="Inventario" parent="tren_menu_root" action="tren_catalog_action"/>
+    <menuitem id="tren_menu_std" name="Estadísticas" parent="tren_menu_root" action="tren_catalog_action_stats"/>
+</odoo>
