@@ -35,7 +35,7 @@
                             <field name="compania"/>
                             <field name="pais"/>
                             <field name="categoria"/>
-                            <field name="propulsion" attrs="{'invisible': [('categoria', 'not in', ['Locomotora', 'Emu'])]}"/>
+                            <field name="propulsion" invisible="categoria not in ['Locomotora', 'Emu']"/>
                             <field name="marca"/>
                             <field name="referencia"/>
                             <field name="intro"/>
@@ -54,12 +54,12 @@
                     <notebook>
                         <!-- PESTAÑA TÉCNICA: Solo visible para Locomotoras y EMUs -->
                         <page string="Detalles Técnicos" 
-                              attrs="{'invisible': [('categoria', 'not in', ['Locomotora', 'Emu'])]}">
+                              invisible="categoria not in ['Locomotora', 'Emu']">
                             <group>
                                 <group string="Digital">
                                     <field name="decoder_main"/>
-                                    <field name="decoder_h1" attrs="{'invisible': [('categoria', 'not in', ['Emu'])]}"/>
-                                    <field name="decoder_h2" attrs="{'invisible': [('categoria', 'not in', ['Emu'])]}"/>
+                                    <field name="decoder_h1" invisible="categoria not in ['Locomotora', 'Emu']"/>
+                                    <field name="decoder_h2" invisible="categoria not in ['Locomotora', 'Emu']"/>
                                     <field name="cv_address"/>
                                     <field name="config"/>
                                     <field name="es_magnetico"/>
@@ -189,8 +189,9 @@
                                     </t>
                                 </div>
 
-                                <!-- Semáforo tipo Badge (Igual que en React) -->
-                                <span t-attf-class="badge rounded-pill bg-#{record.semaforo.raw_value === 'green' ? 'success' : (record.semaforo.raw_value === 'amber' ? 'warning' : 'danger')} p-1 px-2" style="font-size: 10px;">
+                                <!-- Semáforo tipo Badge (Igual que en React) cambio a Odoo17-->
+                                <span t-attf-class="badge rounded-pill bg-#{record.semaforo.raw_value == 'green' ? 'success' : (record.semaforo.raw_value == 'amber' ? 'warning' : 'danger')} p-1 px-2" style="font-size: 10px;">
+
                                     <t t-esc="record.mantenimiento_intervalo_dias.value"/> d
                                 </span>
                             </div>
