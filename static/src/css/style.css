@@ -270,3 +270,34 @@
   background-color: #e2c275 !important;
   color: #071311 !important;
 }
+
+/* --- CORRECCIÓN DE DESPLEGABLES (ESTRELLA DE LA NOCHE) --- */
+
+/* Forzar fondo oscuro y texto dorado en los menús que se abren */
+.dropdown-menu,
+.ui-autocomplete,
+.o-autocomplete--dropdown,
+.o_popover {
+  background-color: #0d261f !important; /* El verde más oscuro de tus inputs */
+  border: 1px solid #e2c275 !important; /* Borde dorado a juego */
+  color: #e2c275 !important;
+}
+
+/* Forzar que los elementos de la lista se vean en dorado */
+.dropdown-menu .dropdown-item,
+.ui-menu-item a,
+.o-autocomplete--dropdown-item a,
+.o_field_widget select option {
+  color: #e2c275 !important;
+  background-color: transparent !important;
+}
+
+/* Efecto al pasar el ratón por encima de un país o marca (Hover) */
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item.focus,
+.ui-menu-item:hover,
+.o-autocomplete--dropdown-item.ui-state-active,
+.o-autocomplete--dropdown-item:hover {
+  background-color: #e2c275 !important; /* Fondo dorado */
+  color: #071311 !important; /* Texto negro noche para contraste */
+}
