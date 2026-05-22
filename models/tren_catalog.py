@@ -61,9 +61,9 @@ class TrenCatalog(models.Model):
     ], string="Propulsión")
 
     # --- MANTENIMIENTO (Lógica computada) ---
-    fecha_ultimo_mantenimiento = fields.Date(string="Último Mantenimiento",  compute_sudo=True)
+    fecha_ultimo_mantenimiento = fields.Date(string="Último Mantenimiento")
     siguiente_mto = fields.Date(string="Siguiente Mantenimiento", compute="_compute_mantenimiento", store=True, compute_sudo=True)
-    mantenimiento_intervalo_dias = fields.Integer(string="Días Restantes", compute="_compute_mantenimiento")
+    mantenimiento_intervalo_dias = fields.Integer(string="Días Restantes", compute="_compute_mantenimiento", compute_sudo=True)
     
     semaforo = fields.Selection([
         ('green', 'Bien'), ('amber', 'Próximo'), 
@@ -88,11 +88,12 @@ class TrenCatalog(models.Model):
             if reg.fecha_ultimo_mantenimiento:
                 reg.siguiente_mto = reg.fecha_ultimo_mantenimiento + timedelta(days=120)
                 delta = reg.siguiente_mto - hoy
+                dias = int(delta.days) # Aseguramos casteo a entero puro
                 reg.mantenimiento_intervalo_dias = delta.days
                 
-                if delta.days > 60: reg.semaforo = 'green'
-                elif delta.days > 30: reg.semaforo = 'amber'
-                elif delta.days >= 0: reg.semaforo = 'red'
+                if dias > 60: reg.semaforo = 'green'
+                elif dias > 30: reg.semaforo = 'amber'
+                elif dias >= 0: reg.semaforo = 'red'
                 else: reg.semaforo = 'stop'
             else:
                 reg.siguiente_mto = False
@@ -104,8 +105,8 @@ class TrenCatalog(models.Model):
     def _compute_imagen_html(self):
         for reg in self:
             if reg.imagen_url:
-                # Creamos el código HTML para mostrar la foto de S3
-                reg.imagen_html = f'<img src="{reg.imagen_url}" style="max-height: 300px; border-radius: 8px; shadow: 5px 5px 15px rgba(0,0,0,0.1);"/>'
+                # Corregido: box-shadow en lugar de shadow
+                reg.imagen_html = f'<img src="{reg.imagen_url}" style="max-height: 300px; border-radius: 8px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1);"/>'
             else:
                 reg.imagen_html = '<p style="color: #999;">Sin fotografía disponible</p>'
    

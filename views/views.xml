@@ -174,20 +174,30 @@
                                 </div>
 
                                 <!-- LOGO DEL FABRICANTE (Aquí abajo a la derecha) -->
-                                <div class="ml-2 d-flex align-items-center justify-content-center" 
-                                    style="background-color: #0d261f; 
-                                            border: 1px solid #e2c275; 
-                                            border-radius: 4px; 
-                                            padding: 4px; 
-                                            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-                                            min-width: 65px;">
-                                    <t t-if="record.marca.raw_value">
+                                <t t-if="record.marca.raw_value">
+                                    <div class="kanban-brand-container ml-2 d-flex align-items-center justify-content-center" 
+                                        style="background-color: #0d261f; 
+                                                border: 1px solid #e2c275; 
+                                                border-radius: 4px; 
+                                                padding: 1px;               
+                                                box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+                                                width: 56px;                
+                                                height: 28px;               
+                                                overflow: hidden;
+                                                display: flex !important;
+                                                align-items: center !important;
+                                                justify-content: center !important;">
+                                        
                                         <img t-attf-src="https://fotosparaapp.s3.eu-north-1.amazonaws.com/jositoxtr/fabricantes/#{record.marca.raw_value.toLowerCase().trim()}.png" 
                                             alt="Marca"
-                                            style="height: 22px; max-width: 55px; object-fit: contain; filter: brightness(1.1);"
+                                            class="kanban-brand-img"
+                                            style="width: 100% !important;   /* Al tener el mismo ratio que el contenedor, */
+                                                    height: 100% !important;  /* se expande al 100% en ambos ejes a la vez */
+                                                    object-fit: contain !important; 
+                                                    filter: brightness(1.1);"
                                             t-att-title="record.marca.value"/>
-                                    </t>
-                                </div>
+                                    </div>
+                                </t>
 
                                 <!-- Semáforo tipo Badge (Igual que en React) -->
                                 <span t-attf-class="badge rounded-pill bg-#{record.semaforo.raw_value === 'green' ? 'success' : (record.semaforo.raw_value === 'amber' ? 'warning' : 'danger')} p-1 px-2" style="font-size: 10px;">

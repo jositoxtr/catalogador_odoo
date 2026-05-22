@@ -270,3 +270,42 @@
   background-color: #e2c275 !important;
   color: #071311 !important;
 }
+
+/* --- CORRECCIÓN DE DESPLEGABLES (ESTILO CLÁSICO CLARO) --- */
+
+.dropdown-menu,
+.ui-autocomplete,
+.o-autocomplete--dropdown {
+  background-color: #ffffff !important;
+  color: #212529 !important;
+  border: 1px solid #e2c275 !important;
+}
+
+.dropdown-menu .dropdown-item,
+.ui-menu-item a,
+.o-autocomplete--dropdown-item a,
+.o_field_widget select option {
+  color: #212529 !important; /* Texto gris oscuro/negro */
+  background-color: #ffffff !important;
+}
+
+/* Hover en modo claro */
+.dropdown-menu .dropdown-item:hover,
+.o-autocomplete--dropdown-item:hover {
+  background-color: #1b4d3e !important; /* Tu verde esmeralda */
+  color: #e2c275 !important; /* Texto dorado */
+}
+
+/* --- ESCALADO QUIRÚRGICO DEL LOGO DEL FABRICANTE --- */
+.o_kanban_record .kanban-brand-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+.o_kanban_record .kanban-brand-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important; /* Crece al máximo rozando los bordes sin deformarse */
+}
